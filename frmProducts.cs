@@ -121,5 +121,27 @@ namespace WinForm.Minimart
             showdata(sql, dgvProducts);
 
         }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            // แสดงข้อความยืนยันการลบข้อมูล
+            DialogResult result = MessageBox.Show("คุณต้องการลบข้อมูลสินค้านี้หรือไม่?", "ยืนยันการลบ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                return; // ถ้าผู้ใช้เลือก "No" ให้หยุดการทำงานของฟังก์ชันนี้
+            }
+            string sql = "Delete from products where productID = @productID";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            cmd.ExecuteNonQuery();
+
+            //โหลดข้อมูลใหม่หลังจากลบข้อมูลส มิฉะนั้นข้อมูลตัวใหม่จะไม่แสดง
+            sql = "select productID,ProductName,UnitPrice,UnitsInStock"
+                             + " ,c.CategoryID,CategoryName,discontinued"
+                             + " from products p join Categories c "
+                             + " on p.CategoryID = c.CategoryID"; //คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Products
+            showdata(sql, dgvProducts);
+        }
     }
 }

@@ -62,5 +62,135 @@ namespace WinForm.Minimart
             cboCategory.DisplayMember = "CategoryName";   //กำหนดข้อมูลที่แสดงผล
 
         }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (status == "insert")
+            {
+                insertData();
+            }
+            else if (status == "update")
+            {
+                updateData();
+            }
+            this.Close(); //เมื่อเพิ่มหรือแก ้ไขแล้วควรปิดหน้าต่างฟอร์มออกไป
+        }
+
+        private void updateData()
+        {
+            conn = connectDB.ConnectMinimart();
+            //เขียนตรวจสอบข ้อมูล
+            if (!checkInputData())
+            {
+                return; //หมายความว่า ถ ้า checkInputData() มีค่าเป็น False จะจบโค้ดตรงนี้
+            }
+            string sql = "update products set productName = @productName, UnitPrice= @unitPrice,"
+            + " UnitsInStock =@UnitsInStock,CategoryID=@CategoryID,Discontinued = @Discontinued" + " where productID = @productID";
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@productID", txtProductID.Text.Trim());
+            comm.Parameters.AddWithValue("@productName", txtProductName.Text.Trim());
+            comm.Parameters.AddWithValue("@unitPrice", txtUnitPrice.Text);
+            comm.Parameters.AddWithValue("@UnitsInStock", txtUnitsInStock.Text);
+
+            comm.Parameters.AddWithValue("@CategoryID", cboCategory.SelectedValue); // เอาค่ารหัสที่ได้ จากการเลือกใน comboBox
+            if (radContinued.Checked)
+            {
+                comm.Parameters.AddWithValue("@Discontinued", 0);
+            }
+            else if (radDiscontinued.Checked)
+            {
+                comm.Parameters.AddWithValue("@Discontinued", 1);
+            }
+            
+            try
+            {
+                comm.ExecuteNonQuery(); //สงั่ ใหก้ ารเพมิ่ ขอมลู ท างาน
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                MessageBox.Show(msg, "เกิดข้อผิดพลาด");
+            }
+            conn.Close(); //ปิดการเชอื่ มตอ่
+        }
+
+        private void insertData()
+        {
+            conn = connectDB.ConnectMinimart();
+            //เขยีนโคด้ ตรวจสอบขอ้มลู รหัสสนิ คา้ ชอื่ สนิ คา้ ตอ้ งไมเ่ ป็นทวี่ า่ ง ราคา ตอ้ งเป็นตัวเลข จ านวนตอ้ งเป็นตัวเลข
+            if (!checkInputData())
+            {
+                return; //หมายความว่า ถ ้า checkInputData() มีค่าเป็น False จะจบโค้ดตรงนี้
+            }
+            string sql = "insert into Products " + "values(@productID, @productName, @unitPrice, @UnitsInStock, @CategoryID, @Discontinued)";
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@productID", txtProductID.Text.Trim());
+            comm.Parameters.AddWithValue("@productName", txtProductName.Text.Trim());
+            comm.Parameters.AddWithValue("@unitPrice", txtUnitPrice.Text);
+            comm.Parameters.AddWithValue("@UnitsInStock", txtUnitsInStock.Text);
+            comm.Parameters.AddWithValue("@CategoryID", cboCategory.SelectedValue); //เอาค่ารหัสที่ได้จากการเลือกใน comboBox
+            if (radContinued.Checked)
+            {
+                comm.Parameters.AddWithValue("@Discontinued", 0);
+            }
+            else if (radDiscontinued.Checked)
+            {
+                comm.Parameters.AddWithValue("@Discontinued", 1);
+            }
+
+            try
+            {
+                comm.ExecuteNonQuery(); //สงั่ ใหก้ ารเพมิ่ ขอมลู ท างาน
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                MessageBox.Show(msg, "เกิดข้อผิดพลาด");
+            }
+            conn.Close(); //ปิดการเชอื่ มตอ่
+        }
+        private bool checkInputData() //ถ ้าคืนค่าเป็น true ท างานต่อ แต่ถ ้าคืนค่าเป็น False ข ้อมูลมีข ้อผิดพลาด
+        {
+
+            //ตรวจสอบรหัสสนิ คา้ ไมใ่ หเ้ป็นทวี่ า่ ง
+            if (txtProductID.Text.Trim() == "")
+            {
+                MessageBox.Show("รหัสสินค้าต้องไม่เป็นค่าว่าง", "เกิดข้อผิดพลาด");
+                return false;
+            }
+            //ตรวจสอบชอื่ สนิ คา้
+            if (txtProductName.Text.Trim() == "")
+            {
+                MessageBox.Show("ชื่อสินค้าต้องไม่เป็นค่าว่าง", "เกิดข้อผิดพลาด");
+                return false;
+            }
+            //ตรวจสอบราคากรอกเป็นตัวเลขหรือไม่
+            double x = 0.00;
+            if (!double.TryParse(txtUnitPrice.Text, out x))
+            {
+                MessageBox.Show("ราคาสินค้าผิดพลาด", "เกิดข้อผิดพลาด");
+                return false;
+            }
+            //ตรวจสอบจ านวนว่าเป็นจ านวนเต็มหรือไม่
+            int y = 0;
+            if (!int.TryParse(txtUnitsInStock.Text, out y))
+            {
+                MessageBox.Show("จำนวนสินค้าผิดพลาด", "เกิดข้อผิดพลาด");
+                return false;
+            }
+            return true;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            //เคลียร์ข้อมูลในฟอร์ม
+            txtProductID.Clear();
+            txtProductName.Clear();
+            txtUnitPrice.Clear();
+            txtUnitsInStock.Clear();
+            cboCategory.SelectedIndex = -1; //กำหนดให้ comboBox ไม่มีการเลือก
+            radContinued.Checked = false;
+            radDiscontinued.Checked = false;
+            radDiscontinued.Enabled = false;
+        }
     }
 }
