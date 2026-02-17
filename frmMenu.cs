@@ -12,7 +12,7 @@ namespace WinForm.Minimart
         private void Form1_Load(object sender, EventArgs e)
         {
             conn = connectDB.ConnectMinimart(); //เรียกใช้ฟังก์ชันเชื่อมต่อฐานข้อมูล
-            
+
         }
 
         private void showdata1(string sql, DataGridView dgv)
@@ -29,7 +29,7 @@ namespace WinForm.Minimart
         private void จดการสนคาToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // เปิดฟอร์มจัดการสินค้า ได้ 1 อัน
-            frmEditProducts f = new frmEditProducts();
+            frmProducts f = new frmProducts();
             f.MdiParent = this; // กำหนดฟอร์มแม่
             f.Show();
 
@@ -40,6 +40,13 @@ namespace WinForm.Minimart
         {
             // เปิดฟอร์มจัดการหมวดหมู่
             frmCategories f = new frmCategories();
+            f.MdiParent = this; // กำหนดฟอร์มแม่
+            f.Show();
+        }
+
+        private void จดการพนกงานToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEmployees f = new frmEmployees();
             f.MdiParent = this; // กำหนดฟอร์มแม่
             f.Show();
         }
