@@ -33,12 +33,13 @@
             เพมสนคาToolStripMenuItem = new ToolStripMenuItem();
             จดการหมวดหมToolStripMenuItem = new ToolStripMenuItem();
             จดการพนกงานToolStripMenuItem = new ToolStripMenuItem();
+            pOSToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { จดการสนคาToolStripMenuItem, จดการหมวดหมToolStripMenuItem, จดการพนกงานToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { pOSToolStripMenuItem, จดการสนคาToolStripMenuItem, จดการหมวดหมToolStripMenuItem, จดการพนกงานToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 1, 0, 1);
@@ -74,6 +75,13 @@
             จดการพนกงานToolStripMenuItem.Text = "จัดการพนักงาน";
             จดการพนกงานToolStripMenuItem.Click += จดการพนกงานToolStripMenuItem_Click;
             // 
+            // pOSToolStripMenuItem
+            // 
+            pOSToolStripMenuItem.Name = "pOSToolStripMenuItem";
+            pOSToolStripMenuItem.Size = new Size(41, 22);
+            pOSToolStripMenuItem.Text = "POS";
+            pOSToolStripMenuItem.Click += pOSToolStripMenuItem_Click;
+            // 
             // frmMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -99,5 +107,6 @@
         private ToolStripMenuItem เพมสนคาToolStripMenuItem;
         private ToolStripMenuItem จดการหมวดหมToolStripMenuItem;
         private ToolStripMenuItem จดการพนกงานToolStripMenuItem;
+        private ToolStripMenuItem pOSToolStripMenuItem;
     }
 }

@@ -50,5 +50,12 @@ namespace WinForm.Minimart
             f.MdiParent = this; // กำหนดฟอร์มแม่
             f.Show();
         }
+
+        private void pOSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPOS f = new frmPOS();
+            f.MdiParent = this;
+            f.Show();
+        }
     }
 }
