@@ -64,7 +64,7 @@
             txtUsername.Location = new Point(34, 102);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(283, 23);
-            txtUsername.TabIndex = 2;
+            txtUsername.TabIndex = 1;
             // 
             // label3
             // 
@@ -81,7 +81,7 @@
             txtPassword.Location = new Point(34, 167);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(283, 23);
-            txtPassword.TabIndex = 4;
+            txtPassword.TabIndex = 2;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // btnLogin
@@ -90,7 +90,7 @@
             btnLogin.Location = new Point(85, 234);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(77, 36);
-            btnLogin.TabIndex = 5;
+            btnLogin.TabIndex = 3;
             btnLogin.Text = "เข้าสู่ระบบ";
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
@@ -111,7 +111,7 @@
             btnCancel.Location = new Point(183, 234);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(77, 36);
-            btnCancel.TabIndex = 7;
+            btnCancel.TabIndex = 4;
             btnCancel.Text = "ยกเลิก";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
